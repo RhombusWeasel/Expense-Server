@@ -7,6 +7,10 @@
 ]]
 local class = {}
 
+function log(text)
+  print(text)
+end
+
 function class:extend(subClass)
   return setmetatable(subClass or {}, {__index = self})
 end
@@ -87,11 +91,12 @@ local enet = require("enet")
 game = {}
 engine = {
   class = class,
+  log = log,
   host = enet.host_create("*:6790"),
 }
 
 function load_game()
-  
+  engine.commands.spawn_star({"0", "0", "sol"})
 end
 
 os.execute("clear")
