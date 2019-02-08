@@ -26,7 +26,7 @@ function class:init(...) end
   Recursively load files and store them in a table.
 ]]
 
-function scandir(directory)
+local function scandir(directory)
   local i, t, popen = 0, {}, io.popen
   local pfile = popen('ls -a "'..directory..'"')
   for filename in pfile:lines() do
@@ -109,6 +109,7 @@ function update()
   while event do
     local pkt = engine.string.unpack(event.data)
     if pkt then
+      print(pkt)
       if event.type == "receive" then
         if engine.message[pkt.command] then
           engine.message[pkt.command](event, pkt)
@@ -123,11 +124,11 @@ function update()
   end
 end
 
+--PROGRAM START:
 os.execute("clear")
 
 getFiles(engine, "Lib")
 getFiles(engine, "Data")
-
 
 engine.exit_bool = false
 while not engine.exit_bool do
