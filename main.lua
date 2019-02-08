@@ -39,7 +39,6 @@ end
 
 local function getFile(tab, path, folder, file)
   if tab[folder] == nil then
-    print("Loading: Creating table engine."..folder)
     tab[folder] = {}
   end
   local ext = string.sub(file, #file - 3, #file)
@@ -60,7 +59,6 @@ local function getFiles(tab, path, folder)
   else
     filePath = path.."/"..folder
   end
-  print("Loading: Checking "..filePath)
   local data = scandir(filePath)
   for i = 1, #data do
     local file = data[i]
@@ -128,3 +126,10 @@ end
 os.execute("clear")
 
 getFiles(engine, "Lib")
+getFiles(engine, "Data")
+
+
+engine.exit_bool = false
+while not engine.exit_bool do
+  update()
+end
