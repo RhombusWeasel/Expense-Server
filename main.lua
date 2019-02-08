@@ -105,7 +105,7 @@ function load_game()
 end
 
 function update()
-  local event = host:service(100)
+  local event = engine.host:service(100)
   while event do
     local pkt = engine.string.unpack(event.data)
     if pkt then
@@ -119,7 +119,7 @@ function update()
         
       end
     end
-    event = host:service()
+    event = engine.host:service()
   end
 end
 
