@@ -1,19 +1,4 @@
 return function(args)
-  if #args < 3 then
-    engine.log("Error: Insufficient arguments provided.")
-    engine.log("Usage: spawn_star [INT x_pos] [INT y_pos] [STR template]")
-    return
-  end
-  if not tonumber(args[1]) or not tonumber(args[2]) then
-    engine.log("Error: Incorrect arguments given.")
-    engine.log("Usage: spawn_star [INT x_pos] [INT y_pos] [STR template]")
-    return
-  end
-  if engine.solar_templates[args[3]] == nil then
-    engine.log("Error: Invalid template given.")
-    engine.log("Usage: spawn_star [INT x_pos] [INT y_pos] [STR template]")
-    return
-  end
   local x = tonumber(args[1])
   local y = tonumber(args[2])
   local name =args[3]

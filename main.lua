@@ -88,15 +88,41 @@ end
 
 local enet = require("enet")
 
+hosts = {}
+clients = {}
+names = {}
 game = {}
 engine = {
   class = class,
   log = log,
+  server_col = {0,1,0,1},
   host = enet.host_create("*:6790"),
+  hosts = {},
+  players = {},
 }
 
 function load_game()
+  game.ecs = engine.system.ecs:new()
   engine.commands.spawn_star({"0", "0", "sol"})
+end
+
+function update()
+  local event = host:service(100)
+  while event do
+    local pkt = engine.string.unpack(event.data)
+    if pkt then
+      if event.type == "receive" then
+        if engine.message[pkt.command] then
+          engine.message[pkt.command](event, pkt)
+        end
+      elseif event.type == "connect" then
+        engine.message.auth(event)
+      elseif event.type == "disconnect" then
+        
+      end
+    end
+    event = host:service()
+  end
 end
 
 os.execute("clear")
