@@ -5,4 +5,4 @@ return function(event, pkt)
     pkt.command = "message"
     engine.message.broadcast(pkt)
   end
-end,
+end
