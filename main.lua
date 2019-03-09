@@ -95,7 +95,7 @@ engine = {
   log = log,
   server_col = {0,1,0,1},
   host = enet.host_create("*:6789"),
-  hosts = {},
+  hosts = require("hosts.data"),
   players = {},
   clients = {},
 }

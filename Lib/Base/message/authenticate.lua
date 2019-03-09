@@ -14,7 +14,7 @@ return function(event, pkt)
       peer = event.peer
     }
   end
-  engine.system.save(engine.hosts, "hosts", "hosts")
+  engine.system.save(engine.hosts, "hosts", "data")
   engine.message.broadcast(
     {
       command = "message",
