@@ -110,7 +110,6 @@ function update()
   while event do
     local pkt = engine.string.unpack(event.data)
     if pkt then
-      print(pkt)
       if event.type == "receive" then
         if engine.message[pkt.command] then
           engine.message[pkt.command](event, pkt)
