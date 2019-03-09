@@ -97,6 +97,7 @@ engine = {
   host = enet.host_create("*:6789"),
   hosts = {},
   players = {},
+  clients = {},
 }
 
 function load_game()
