@@ -33,12 +33,6 @@ function collide:post_update(dt)
       end
     end
   end
-  if collision_checks > engine.max_checks then
-    engine.max_checks = collision_checks
-  end
-  if collision_checks < engine.min_checks then
-    engine.min_checks = collision_checks
-  end
 end
 
 return collide
