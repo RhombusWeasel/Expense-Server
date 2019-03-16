@@ -19,9 +19,9 @@ return function(args)
         table.insert(ores, k)
       end
       for i = 1, belt.max do
-        local r = math.floor(love.math.random(1, #ores))
+        local r = math.floor(math.random(1, #ores))
         local flux = belt.radius * 0.1
-        local r_mod = love.math.random(-flux, flux)
+        local r_mod = math.random(-flux, flux)
         game.ecs:add_entity(engine.entity.asteroid, star_id, belt.radius + r_mod, ores[r], amt)
       end
     end
