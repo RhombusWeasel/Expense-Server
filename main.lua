@@ -113,13 +113,13 @@ function update()
   local event = engine.host:service(100)
   while event do
     local pkt = engine.string.unpack(event.data)
+    print(event.data)
     if pkt then
       if event.type == "receive" then
         if engine.message[pkt.command] then
           engine.message[pkt.command](event, pkt)
         end
       elseif event.type == "connect" then
-        print(event.data)
         engine.message.auth(event)
       elseif event.type == "disconnect" then
         
