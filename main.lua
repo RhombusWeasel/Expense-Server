@@ -109,7 +109,7 @@ function load_game()
 end
 
 function update()
-  local t = socket.gettime()
+  local t = (socket.gettime() * 1000)
   local event = engine.host:service(100)
   while event do
     local pkt = engine.string.unpack(event.data)
@@ -126,7 +126,7 @@ function update()
     end
     event = engine.host:service()
   end
-  local dt = socket.gettime() - t
+  local dt = (socket.gettime() * 1000) - t
   print(dt)
   engine.state.solar.update(dt)
 end
