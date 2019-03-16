@@ -1,4 +1,4 @@
-return function(event)
+return function(event, packet)
   local pkt = {
     command = "map_update",
     data = game.ecs.entity_list

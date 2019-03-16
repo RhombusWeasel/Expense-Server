@@ -128,7 +128,7 @@ function update()
     event = engine.host:service()
   end
   local dt = socket.gettime() - t
-  engine.state.solar.update(dt)
+  --engine.state.solar.update(dt)
 end
 
 --PROGRAM START:
