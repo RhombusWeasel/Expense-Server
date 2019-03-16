@@ -67,9 +67,7 @@ function state.startup()
   game.ecs:add_system(engine.behaviour.trade_ai)
   game.ecs:add_system(engine.behaviour.crafting)
   game.ecs:add_system(engine.behaviour.track)
-  game.ui = engine.ui.ui_container:new("manager", 0, 0, 1, 1)
-  game.camera = engine.ui.viewport:new("main_camera", 0, 0, 1, 1, 0, 0, 0)
-  engine.console_commands.spawn_star({"0", "0", "sol"})
+  engine.commands.spawn_star({"0", "0", "sol"})
   game.players = {
     engine.player.new(1000000),
     engine.player.new(1000000),
@@ -78,13 +76,12 @@ function state.startup()
   local r_max = 50000
   for i = 1, #stats do
     if stats[i].mine then
-      engine.console_commands.mine({stats[i].item, stats[i].max})
+      engine.commands.mine({stats[i].item, stats[i].max})
     else
-      engine.console_commands.station({stats[i].item, "1", "1", stats[i].max})
+      engine.commands.station({stats[i].item, "1", "1", stats[i].max})
     end
   end
-  engine.console_commands.ship({"shuttle", "80", "1"})
-  --engine.console_commands.details({"88"})
+  engine.commands.ship({"shuttle", "80", "1"})
   compile_starmap()
 end
 
