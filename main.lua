@@ -107,7 +107,7 @@ function load_game()
 end
 
 function update()
-  local t = posix.clock_gettime(0)
+  print(type(os.execute("echo $(($(date +%s%N)/1000000))")))
   local event = engine.host:service(100)
   while event do
     local pkt = engine.string.unpack(event.data)
@@ -124,7 +124,6 @@ function update()
     end
     event = engine.host:service()
   end
-  local dt = posix.clock_gettime(0) - t
   engine.state.solar.update(dt)
   print(dt)
 end
