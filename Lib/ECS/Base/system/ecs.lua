@@ -114,6 +114,8 @@ end
 function ecs:update(dt)
   --if self.system_list[1] == nil then return end
   --if self.entity_list[1] == nil then return end
+  print(self.max_entities)
+  print(type(self.max_entities))
   for i = 1, self.max_entities do
     if self.entity_list[i] ~= "none" then
       if self.entity_list[i].is_dead then
