@@ -19,7 +19,7 @@ return function (args)
   local hold = tonumber(args[4])
   local r_min = 10000
   local r_max = 50000
-  local id = game.ecs:add_entity(engine.entity.station, star, orbit, love.math.random(r_min, r_max), 2, product, hold, 2)
+  local id = game.ecs:add_entity(engine.entity.station, star, orbit, math.random(r_min, r_max), 2, product, hold, 2)
   if not engine.ai_station_list[star] then
     engine.ai_station_list[star] = {}
   end
