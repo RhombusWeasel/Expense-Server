@@ -130,6 +130,7 @@ os.execute("clear")
 getFiles(engine, "Lib")
 getFiles(engine, "Data")
 
+load_game()
 engine.exit_bool = false
 while not engine.exit_bool do
   update()
