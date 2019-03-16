@@ -1,7 +1,7 @@
 local orb = {}
 
 function orb.new(star_id, parent_id, radius, quadrant)
-  local a = love.math.random(0, 359)
+  local a = math.random(0, 359)
   return {
     star = star_id,
     parent = parent_id,
