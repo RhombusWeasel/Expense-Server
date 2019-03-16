@@ -109,7 +109,7 @@ function load_game()
 end
 
 function update()
-  local t = os.execute("echo $(($(date +%s%N)/1000000))")
+  local t = os.execute("date +%s%N")
   local event = engine.host:service(100)
   while event do
     local pkt = engine.string.unpack(event.data)
@@ -126,7 +126,7 @@ function update()
     end
     event = engine.host:service()
   end
-  local dt = os.execute("echo $(($(date +%s%N)/1000000))") - t
+  local dt = os.execute("date +%s%N") - t
   engine.state.solar.update(dt)
 end
 
