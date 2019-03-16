@@ -56,7 +56,7 @@ function ai:find_goods(stat, goods)
               lowest_price = price
               id = target.id
             elseif price == v.price then
-              local r = love.math.random()
+              local r = math.random()
               if r > .5 then
                 id = target.id
               end
