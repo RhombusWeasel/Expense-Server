@@ -129,11 +129,6 @@ function update()
   end
   local dt = socket.gettime() - t
   engine.state.solar.update(dt)
-  local pkt = {
-    command = "map_update",
-    data = game.ecs.entity_list
-  }
-  engine.message.broadcast(pkt)
 end
 
 --PROGRAM START:

@@ -1,4 +1,7 @@
 return function(event)
-  local m_str = engine.string.serialize(game.ecs.entity_list)
-  engine.message.broadcast(m_str)
+  local pkt = {
+    command = "map_update",
+    data = game.ecs.entity_list
+  }
+  event.peer:send(engine.string.serialize(pkt))
 end
