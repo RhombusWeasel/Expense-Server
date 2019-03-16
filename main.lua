@@ -93,6 +93,7 @@ game = {}
 engine = {
   class = class,
   log = log,
+  texture_variation = 5,
   server_col = {0,1,0,1},
   host = enet.host_create("*:6789"),
   hosts = require("Saved_Data.host_data"),
@@ -101,8 +102,7 @@ engine = {
 }
 
 function load_game()
-  game.ecs = engine.system.ecs:new()
-  engine.commands.spawn_star({"0", "0", "sol"})
+  engine.state.solar.startup()
 end
 
 function update()
