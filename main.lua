@@ -95,6 +95,7 @@ engine = {
   class = class,
   log = log,
   texture_variation = 5,
+  game_speed = 1,
   server_col = {0,1,0,1},
   host = enet.host_create("*:6701"),
   hosts = require("Saved_Data.host_data"),
@@ -126,7 +127,6 @@ function update()
   end
   local dt = os.execute("echo $(($(date +%s%N)/1000000))") - t
   engine.state.solar.update(dt)
-  print(dt)
 end
 
 --PROGRAM START:
