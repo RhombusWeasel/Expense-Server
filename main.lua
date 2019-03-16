@@ -119,6 +119,7 @@ function update()
           engine.message[pkt.command](event, pkt)
         end
       elseif event.type == "connect" then
+        print(event.data)
         engine.message.auth(event)
       elseif event.type == "disconnect" then
         
@@ -128,6 +129,11 @@ function update()
   end
   local dt = socket.gettime() - t
   engine.state.solar.update(dt)
+  local pkt = {
+    command = "map_update",
+    data = game.ecs.entity_list
+  }
+  engine.message.broadcast(pkt)
 end
 
 --PROGRAM START:
