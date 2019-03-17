@@ -110,6 +110,7 @@ function load_game()
 end
 
 function update()
+  local t = socket.gettime()
   local event = engine.host:service(100)
   while event do
     local pkt = engine.string.unpack(event.data)
@@ -128,12 +129,13 @@ function update()
     end
     event = engine.host:service()
   end
-  engine.state.solar.update(0.01)
   local pkt = {
     command = "map_update",
     data = game.ecs.entity_list,
   }
   engine.message.broadcast(pkt)
+  local dt = socket.gettime() - t
+  engine.state.solar.update(dt)
 end
 
 --PROGRAM START:
