@@ -86,6 +86,7 @@ end
 
 local enet = require("enet")
 local socket = require("socket")
+local dt = 0
 
 hosts = {}
 clients = {}
@@ -128,8 +129,12 @@ function update()
     end
     event = engine.host:service()
   end
-  local dt = socket.gettime() - t
-  engine.state.solar.update(dt)
+  local edt = socket.gettime() - t
+  dt = dt + edt
+  if dt > 0.1 then
+    engine.state.solar.update(dt)
+    dt = 0
+  end
 end
 
 --PROGRAM START:
