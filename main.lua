@@ -111,7 +111,7 @@ end
 
 function update()
   local t = socket.gettime()
-  local event = engine.host:service(20)
+  local event = engine.host:service(50)
   while event do
     local pkt = engine.string.unpack(event.data)
     if pkt then
