@@ -17,7 +17,7 @@ return function(event, pkt)
   engine.system.save(engine.hosts, "Saved_Data", "host_data")
   engine.message.broadcast(
     {
-      command = "message",
+      command = "server_message",
       message = pkt.name.." joined the server.",
       col = engine.server_col,
       room = pkt.room,
