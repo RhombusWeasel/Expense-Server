@@ -115,7 +115,7 @@ function update()
     local pkt = engine.string.unpack(event.data)
     if pkt then
       if event.type == "receive" then
-        print(event.peer, pkt.command)
+        --print(event.peer, pkt.command)
         if engine.message[pkt.command] then
           engine.message[pkt.command](event, pkt)
         end
