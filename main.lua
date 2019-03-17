@@ -87,6 +87,7 @@ end
 local enet = require("enet")
 local socket = require("socket")
 local dt = 0
+local time = socket.gettime()
 
 hosts = {}
 clients = {}
@@ -110,7 +111,6 @@ function load_game()
 end
 
 function update()
-  local t = socket.gettime()
   local event = engine.host:service(50)
   while event do
     local pkt = engine.string.unpack(event.data)
@@ -134,7 +134,9 @@ function update()
     data = game.ecs.entity_list,
   }
   engine.message.broadcast(pkt)
-  local dt = socket.gettime() - t
+  collectgarbage()
+  local dt = socket.gettime() - time
+  time = socket.gettime()
   engine.state.solar.update(dt)
 end
 
