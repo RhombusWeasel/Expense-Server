@@ -133,6 +133,7 @@ end
 function print_debug()
   if engine.debug_change then
     os.execute("ansi --erase-display=2")
+    os.execute("ansi --position=1,1")
     for i = 1, #engine.debug_draw do
       local key = engine.debug_draw[i]
       print(engine.string.l_pad(key, 20).." "..tostring(engine.debug_log[key].value))
