@@ -138,13 +138,13 @@ function update()
     command = "map_update",
     data = game.ecs.entity_list,
   }
-  print("Pre-broadcast ram : "..collectgarbage("count"))
   engine.message.broadcast(pkt)
   collectgarbage("collect")
   print("Post-broadcast ram : "..collectgarbage("count"))
   local dt = socket.gettime() - time
   time = socket.gettime()
-  --engine.state.solar.update(dt)
+  engine.state.solar.update(dt)
+  print("Post-update ram    : "..collectgarbage("count"))
 end
 
 --PROGRAM START:
