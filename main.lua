@@ -137,8 +137,7 @@ function print_debug()
     local key = engine.debug_draw[i]
     if engine.debug_log[key].value ~= engine.debug_log[key].last then
       os.execute("ansi --erase-line="..i)
-      os.execute("ansi --position="..i..",1")
-      print(engine.string.l_pad(key, 20).." "..tostring(engine.debug_log[key].value))
+      os.execute("ansi --position="..i..",1"..engine.string.l_pad(key, 20).." "..tostring(engine.debug_log[key].value))
     end
   end
   engine.debug_change = false
