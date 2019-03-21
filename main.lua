@@ -122,11 +122,12 @@ function engine.debug_text(key, value)
       engine.debug_log[key] = {
         value = value,
         index = index,
+        last = 0,
       }
       engine.debug_draw[index] = key
     end
+    engine.debug_log[key].last = engine.debug_log[key].value
     engine.debug_log[key].value = value
-    engine.debug_change = true
   end
 end
 
@@ -136,7 +137,11 @@ function print_debug()
     os.execute("ansi --position=1,1")
     for i = 1, #engine.debug_draw do
       local key = engine.debug_draw[i]
-      print(engine.string.l_pad(key, 20).." "..tostring(engine.debug_log[key].value))
+      if engine.debug_log[key].value ~= engine.debug_log[key].last then
+        os.execute("ansi --erase-line="..i)
+        os.execute("ansi --position=1,"..i)
+        write(engine.string.l_pad(key, 20).." "..tostring(engine.debug_log[key].value))
+      end
     end
     engine.debug_change = false
   end
