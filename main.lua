@@ -178,13 +178,13 @@ function update()
   }
   engine.message.broadcast(pkt)
   collectgarbage("collect")
-  engine.debug_text("Connections", engine.host:peer_count())
   local dt = socket.gettime() - time
   time = socket.gettime()
   engine.state.solar.update(dt)
   engine.debug_text("Tracked values", #engine.debug_draw)
   engine.debug_text("RAM Usage", math.floor(collectgarbage("count")))
   engine.debug_text("Entities", #game.ecs.entity_list)
+  engine.debug_text("Connections", engine.host:peer_count())
 end
 
 --PROGRAM START:
