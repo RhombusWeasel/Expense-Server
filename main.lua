@@ -138,11 +138,11 @@ function update()
     command = "map_update",
     data = game.ecs.entity_list,
   }
-  --engine.message.broadcast(pkt)
+  engine.message.broadcast(pkt)
   collectgarbage()
   local dt = socket.gettime() - time
   time = socket.gettime()
-  engine.state.solar.update(dt)
+  --engine.state.solar.update(dt)
 end
 
 --PROGRAM START:
