@@ -154,7 +154,6 @@ function load_game()
   engine.state.solar.startup()
   os.execute("ansi --erase-display=2")
   local time = os.time()
-  engine.debug_text("Start Time", format_time(time))
   engine.start_time = time
   engine.uptime = time
 end
@@ -193,6 +192,7 @@ function update()
   time = socket.gettime()
   engine.state.solar.update(dt)
   engine.uptime = os.time()
+  engine.debug_text("Start Time", format_time(engine.start_time))
   engine.debug_text("Uptime", format_time(engine.uptime - engine.start_time))
   engine.debug_text("Tracked values", engine.debug_count)
   engine.debug_text("RAM Usage", math.floor(collectgarbage("count")))
