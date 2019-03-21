@@ -105,6 +105,7 @@ engine = {
   players = {},
   clients = {},
   debug_log = {},
+  debug_draw = {},
   debug_change = true,
   debug_mode = true,
 }
