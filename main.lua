@@ -139,6 +139,7 @@ function update()
     data = game.ecs.entity_list,
   }
   engine.message.broadcast(pkt)
+  engine.host:flush()
   collectgarbage("collect")
   local dt = socket.gettime() - time
   time = socket.gettime()
