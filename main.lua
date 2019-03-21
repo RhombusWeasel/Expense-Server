@@ -106,7 +106,6 @@ engine = {
   clients = {},
   debug_log = {},
   debug_draw = {},
-  debug_change = true,
   debug_mode = true,
 }
 
@@ -183,11 +182,10 @@ function update()
   time = socket.gettime()
   engine.state.solar.update(dt)
   engine.debug_text("RAM Usage", math.floor(collectgarbage("count")))
+  engine.debug_text("Entities", #game.ecs.entity_list)
 end
 
 --PROGRAM START:
-os.execute("clear")
-
 getFiles(engine, "Lib")
 getFiles(engine, "Data")
 
