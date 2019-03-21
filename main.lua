@@ -142,7 +142,7 @@ function update()
   collectgarbage()
   local dt = socket.gettime() - time
   time = socket.gettime()
-  --engine.state.solar.update(dt)
+  engine.state.solar.update(dt)
 end
 
 --PROGRAM START:
