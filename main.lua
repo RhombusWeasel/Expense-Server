@@ -166,11 +166,11 @@ function update()
   }
   engine.message.broadcast(pkt)
   collectgarbage("collect")
-  engine.debug_text("Post-broadcast ram", collectgarbage("count"))
+  engine.debug_text("Post-broadcast ram", math.floor(collectgarbage("count")))
   local dt = socket.gettime() - time
   time = socket.gettime()
   engine.state.solar.update(dt)
-  engine.debug_text("Post-update ram", collectgarbage("count"))
+  engine.debug_text("Post-update ram", math.floor(collectgarbage("count")))
 end
 
 --PROGRAM START:
