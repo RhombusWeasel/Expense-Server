@@ -139,11 +139,10 @@ function update()
     data = game.ecs.entity_list,
   }
   engine.message.broadcast(pkt)
-  engine.host:flush()
   collectgarbage("collect")
   local dt = socket.gettime() - time
   time = socket.gettime()
-  engine.state.solar.update(dt)
+  --engine.state.solar.update(dt)
 end
 
 --PROGRAM START:
@@ -154,6 +153,7 @@ getFiles(engine, "Data")
 
 load_game()
 engine.exit_bool = false
+engine.state.solar.update(dt)
 while not engine.exit_bool do
   update()
 end
