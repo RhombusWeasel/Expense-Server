@@ -124,7 +124,12 @@ function update()
         print(event.peer, "Connected.")
         engine.message.auth(event)
       elseif event.type == "disconnect" then
-        
+        for k, v in pairs(engine.clients) do
+          if v.peer == event.peer then
+            engine.hosts[k].online = false
+            engine.clients[k].peer = nil
+          end
+        end
       end
     end
     event = engine.host:service()
@@ -133,7 +138,7 @@ function update()
     command = "map_update",
     data = game.ecs.entity_list,
   }
-  engine.message.broadcast(pkt)
+  --engine.message.broadcast(pkt)
   collectgarbage()
   local dt = socket.gettime() - time
   time = socket.gettime()
