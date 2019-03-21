@@ -132,7 +132,6 @@ end
 function print_debug()
   if engine.debug_change then
     os.execute("ansi --erase-display=2")
-    os.execute("ansi --position=1,1")
     for i = 1, #engine.debug_draw do
       local key = engine.debug_draw[i]
       print(engine.string.l_pad(key, 20).." "..tostring(engine.debug_log[key].value))
@@ -175,11 +174,11 @@ function update()
   }
   engine.message.broadcast(pkt)
   collectgarbage("collect")
-  engine.debug_text("Post-broadcast ram", math.floor(collectgarbage("count")))
+  engine.debug_text("Connections", engine.host:peer_count())
   local dt = socket.gettime() - time
   time = socket.gettime()
   engine.state.solar.update(dt)
-  engine.debug_text("Post-update ram", math.floor(collectgarbage("count")))
+  engine.debug_text("RAM Usage", math.floor(collectgarbage("count")))
 end
 
 --PROGRAM START:
