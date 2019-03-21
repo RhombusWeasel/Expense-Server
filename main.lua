@@ -112,7 +112,7 @@ engine = {
 
 local function format_time(s)
   local secs = engine.string.r_pad(tostring(s % 60), 2, "0")
-  local mins = engine.string.r_pad(tostring(math.floor(s / 60) % 60)), 2, "0")
+  local mins = engine.string.r_pad(tostring(math.floor(s / 60) % 60), 2, "0")
   local hours = engine.string.r_pad(tostring(math.floor(s / (60 * 60 * 24)) % 24), 2, "0")
   return hours..":"..mins..":"..secs
 end
