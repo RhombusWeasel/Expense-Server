@@ -122,7 +122,7 @@ function engine.debug_text(key, value)
       engine.debug_log[key] = {
         value = value,
         index = index,
-        last = 0,
+        last = "",
       }
       engine.debug_count = engine.debug_count + 1
       engine.debug_draw[engine.debug_count] = key
