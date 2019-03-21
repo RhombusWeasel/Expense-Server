@@ -133,8 +133,6 @@ end
 
 function print_debug()
   if engine.debug_change then
-    os.execute("ansi --erase-display=2")
-    os.execute("ansi --position=1,1")
     for i = 1, #engine.debug_draw do
       local key = engine.debug_draw[i]
       if engine.debug_log[key].value ~= engine.debug_log[key].last then
@@ -149,6 +147,7 @@ end
 
 function load_game()
   engine.state.solar.startup()
+  os.execute("ansi --erase-display=2")
 end
 
 function update()
