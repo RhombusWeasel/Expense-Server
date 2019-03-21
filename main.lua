@@ -147,7 +147,7 @@ function print_debug()
       os.execute("ansi --position="..i..",1 '"..engine.string.l_pad(key, 20)..engine.string.r_pad(tostring(engine.debug_log[key].value), 10).."'")
     end
   end
-  engine.debug_change = false
+  os.execute("ansi --hide-cursor")
 end
 
 function load_game()
