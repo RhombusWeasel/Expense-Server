@@ -110,13 +110,21 @@ engine = {
 }
 
 function engine.debug_text(key, value)
+  local index = #engine.debug_log + 1
   if engine.debug_mode then
     if engine.debug_log[key] then
-      if engine.debug_log[key] == value then
+      index = engine.debug_log[key].index
+      if engine.debug_log[key].value == value then
         return
       end
+    else
+      engine.debug_log[key] = {
+        value = value,
+        index = index,
+      }
+      engine.debug_draw[index] = key
     end
-    engine.debug_log[key] = value
+    engine.debug_log[key].value = value
     engine.debug_change = true
   end
 end
@@ -124,9 +132,10 @@ end
 function print_debug()
   if engine.debug_change then
     os.execute("ansi --erase-display=2")
-    os.execute("ansi --position=1,0")
-    for k, v in pairs(engine.debug_log) do
-      print(k, v)
+    os.execute("ansi --position=1,1")
+    for i = 1, #engine.debug_draw do
+      local key = engine.debug_draw[i]
+      print(engine.string.l_pad(key, 20).." "..tostring(engine.debug_log[key].value))
     end
     engine.debug_change = false
   end
