@@ -132,17 +132,15 @@ function engine.debug_text(key, value)
 end
 
 function print_debug()
-  if engine.debug_change then
-    for i = 1, #engine.debug_draw do
-      local key = engine.debug_draw[i]
-      if engine.debug_log[key].value ~= engine.debug_log[key].last then
-        os.execute("ansi --erase-line="..i)
-        os.execute("ansi --position=1,"..i)
-        write(engine.string.l_pad(key, 20).." "..tostring(engine.debug_log[key].value))
-      end
+  for i = 1, #engine.debug_draw do
+    local key = engine.debug_draw[i]
+    if engine.debug_log[key].value ~= engine.debug_log[key].last then
+      os.execute("ansi --erase-line="..i)
+      os.execute("ansi --position=1,"..i)
+      write(engine.string.l_pad(key, 20).." "..tostring(engine.debug_log[key].value))
     end
-    engine.debug_change = false
   end
+  engine.debug_change = false
 end
 
 function load_game()
