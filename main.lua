@@ -123,7 +123,9 @@ end
 
 function print_debug()
   if engine.debug_change then
-    os.execute("ansi --erase-display=2 --reset-all --position=1,1")
+    --os.execute("ansi --erase-display=2")
+    os.execute("ansi --reset-all")
+    os.execute("ansi --position=1,1")
     for k, v in pairs(engine.debug_log) do
       print(k, v)
     end
