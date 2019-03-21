@@ -139,7 +139,7 @@ function update()
     data = game.ecs.entity_list,
   }
   engine.message.broadcast(pkt)
-  collectgarbage()
+  collectgarbage("collect")
   local dt = socket.gettime() - time
   time = socket.gettime()
   engine.state.solar.update(dt)
