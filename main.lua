@@ -110,6 +110,13 @@ engine = {
   debug_count = 0
 }
 
+local function format_time(s)
+  local secs = engine.string.r_pad(tostring(s % 60), 2, "0")
+  local mins = engine.string.r_pad(tostring(s % (60 * 60)), 2, "0")
+  local hours = engine.string.r_pad(tostring(s % (60 * 60 * 24)), 2, "0")
+  return hours..":"..mins..":"..secs
+end
+
 function engine.debug_text(key, value)
   local index = #engine.debug_log + 1
   if engine.debug_mode then
@@ -146,6 +153,10 @@ end
 function load_game()
   engine.state.solar.startup()
   os.execute("ansi --erase-display=2")
+  local time = os.time()
+  engine.debug_text("Start Time", format_time(time))
+  engine.start_time = time
+  engine.uptime = time
 end
 
 function update()
@@ -181,7 +192,9 @@ function update()
   local dt = socket.gettime() - time
   time = socket.gettime()
   engine.state.solar.update(dt)
-  engine.debug_text("Tracked values", #engine.debug_draw)
+  engine.uptime = os.time()
+  engine.debug_text("Uptime", engine.uptime - engine.start_time)
+  engine.debug_text("Tracked values", engine.debug_count)
   engine.debug_text("RAM Usage", math.floor(collectgarbage("count")))
   engine.debug_text("Entities", #game.ecs.entity_list)
   engine.debug_text("Connections", engine.host:peer_count())
