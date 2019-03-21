@@ -104,7 +104,32 @@ engine = {
   hosts = require("Saved_Data.host_data"),
   players = {},
   clients = {},
+  debug_log = {},
+  debug_change = true,
+  debug_mode = true,
 }
+
+function engine.debug_text(key, value)
+  if engine.debug_mode then
+    if engine.debug_log[key] then
+      if engine.debug_log[key] == value then
+        return
+      end
+    end
+    engine.debug_log[key] = value
+    engine.debug_change = true
+  end
+end
+
+function print_debug()
+  if engine.debug_change then
+    os.execute("ansi clear")
+    for k, v in pairs(engine.debug_log) do
+      print(k, v)
+    end
+    engine.debug_change = false
+  end
+end
 
 function load_game()
   engine.state.solar.startup()
@@ -140,11 +165,11 @@ function update()
   }
   engine.message.broadcast(pkt)
   collectgarbage("collect")
-  print("Post-broadcast ram : "..collectgarbage("count"))
+  engine.debug_text("Post-broadcast ram", collectgarbage("count"))
   local dt = socket.gettime() - time
   time = socket.gettime()
   engine.state.solar.update(dt)
-  print("Post-update ram    : "..collectgarbage("count"))
+  engine.debug_text("Post-update ram", collectgarbage("count"))
 end
 
 --PROGRAM START:
@@ -158,4 +183,5 @@ engine.exit_bool = false
 engine.state.solar.update(dt)
 while not engine.exit_bool do
   update()
+  print_debug()
 end
