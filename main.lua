@@ -164,7 +164,6 @@ function print_debug()
 end
 
 function load_game()
-  engine.state.solar.startup()
   os.execute("ansi --erase-display=2")
   engine.debug_text("Uptime", "00:00:00")
   engine.debug_text("Tracked values", 0)
@@ -175,6 +174,7 @@ function load_game()
   engine.debug_text("Last Packet", "None")
   engine.debug_text("Last Connection", "None")
   engine.debug_text("Last Disconnect", "None")
+  engine.state.solar.startup()
   local time = os.time()
   engine.start_time = time
   engine.uptime = time
