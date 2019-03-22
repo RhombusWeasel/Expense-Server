@@ -129,7 +129,7 @@ function ecs:update(dt)
     for i = 1, #self.system_list do
       local s_ram = collectgarbage("count")
       self:update_system(dt, self.system_list[i])
-      engine.debug_text("ECS System "..self.system_list[i].label.." SRAM", math.round(collectgarbage("count") - s_ram, 2))
+      engine.debug_text(self.system_list[i].label.." RAM", math.round(collectgarbage("count") - s_ram, 2))
     end
   end
 end
