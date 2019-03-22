@@ -126,10 +126,13 @@ function ecs:update(dt)
     end
   end
   local s_ram = collectgarbage("count")
+  local last = s_ram
   for i = 1, engine.game_speed do
     for i = 1, #self.system_list do
       self:update_system(dt, self.system_list[i])
-      engine.debug_text(self.system_list[i].label.." RAM", math.round(collectgarbage("count") - s_ram, 2))
+      local current = collectgarbage("count")
+      engine.debug_text(self.system_list[i].label.." RAM", math.round(current - last, 2))
+      last = current
     end
   end
 end
