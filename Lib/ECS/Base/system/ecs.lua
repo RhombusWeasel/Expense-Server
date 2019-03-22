@@ -9,6 +9,8 @@ local ecs = engine.class:extend()
   Initialize the entity list and the system list.
 ]]
 function ecs:init()
+  engine.debug_text("ECS Start RAM", collectgarbage("count"))
+  engine.debug_text("ECS End RAM", collectgarbage("count"))
   self.entity_list = {}
   self.system_list = {}
   self.selected_list = {}
@@ -28,13 +30,13 @@ end
   
   Each system may contain a pre_update method which is called once at the start of each update cycle
 ]]
-
 function ecs:add_system(sys, ...)
   local s = sys:new(...)
   if s.setup ~= nil then
     s:setup()
   end
   table.insert(self.system_list, s)
+  engine.debug_test("ECS Systems", #self.system_list)
   self.system_list[#self.system_list].update_list = {}
 end
 
@@ -123,7 +125,9 @@ function ecs:update(dt)
   end
   for i = 1, engine.game_speed do
     for i = 1, #self.system_list do
+      engine.debug_test("ECS System "..i.." SRAM", collectgarbage("count"))
       self:update_system(dt, self.system_list[i])
+      engine.debug_test("ECS System "..i.." ERAM", collectgarbage("count"))
     end
   end
 end
