@@ -131,7 +131,7 @@ function engine.debug_text(key, value)
     if engine.debug_log[key] then
       index = engine.debug_log[key].index
       if engine.debug_log[key].value == value then
-        engine.debug_log[key].last = value
+        --engine.debug_log[key].last = value
         return
       end
     else
