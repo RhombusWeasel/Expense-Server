@@ -126,6 +126,7 @@ function ecs:update(dt)
     end
   end
   local s_ram = collectgarbage("count")
+  engine.debug_text("ECS Start RAM", math.round(s_ram, 2))
   local last = s_ram
   for i = 1, engine.game_speed do
     for i = 1, #self.system_list do
@@ -135,6 +136,9 @@ function ecs:update(dt)
       last = current
     end
   end
+  local e_ram = collectgarbage("count")
+  engine.debug_text("ECS End RAM", math.round(e_ram, 2))
+  engine.debug_text("ECS Gain RAM", math.round(e_ram - s_ram, 2))
 end
 
 --[[Get Entity:
