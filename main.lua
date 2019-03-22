@@ -144,7 +144,7 @@ function engine.debug_text(key, value)
       engine.debug_draw[engine.debug_count] = key
       return
     end
-    engine.debug_log[key].last = engine.debug_log[key].value
+    engine.debug_log[key].changed = true
     engine.debug_log[key].value = value
   end
 end
@@ -162,6 +162,7 @@ function print_debug()
       if engine.debug_log[key].value ~= engine.debug_log[key].last then
         draw_count = draw_count + 1
         os.execute("ansi --position="..i..",1 --hide-cursor '"..engine.string.l_pad(key, 20)..engine.string.r_pad(tostring(engine.debug_log[key].value), 15).."'")
+        engine.debug_log[key].changed = false
       end
     end
     engine.debug_text("Draw Count", draw_count)
