@@ -187,15 +187,15 @@ function update()
     local pkt = engine.string.unpack(event.data)
     if pkt then
       if event.type == "receive" then
-        engine.debug_text("Last Packet", event.peer..": "..pkt.command)
+        engine.debug_text("Last Packet", tostring(event.peer)..": "..pkt.command)
         if engine.message[pkt.command] then
           engine.message[pkt.command](event, pkt)
         end
       elseif event.type == "connect" then
-        engine.debug_text("Last Connection", event.peer)
+        engine.debug_text("Last Connection", tostring(event.peer))
         engine.message.auth(event)
       elseif event.type == "disconnect" then
-        engine.debug_text("Last Disconnect", event.peer)
+        engine.debug_text("Last Disconnect", tostring(event.peer))
         for k, v in pairs(engine.clients) do
           if v.peer == event.peer then
             engine.hosts[k].online = false
