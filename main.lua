@@ -8,7 +8,7 @@
 local class = {}
 
 function log(text)
-  print(text)
+  --print(text)
 end
 
 function class:extend(subClass)
@@ -94,8 +94,6 @@ local enet = require("enet")
 local socket = require("socket")
 local dt = 0
 local time = socket.gettime()
-local t_str = "00:00:00"
-local counter_time = 0
 local draw_count = 0
 
 hosts = {}
