@@ -157,7 +157,7 @@ function print_debug()
     for i = 1, #engine.debug_draw do
       local key = engine.debug_draw[i]
       if engine.debug_log[key].value ~= engine.debug_log[key].last then
-        os.execute("ansi --position="..engine.debug_line..",1 --hide-cursor '"..engine.string.l_pad(key, 20)..engine.string.r_pad(tostring(engine.debug_log[key].value), 15).."'")
+        os.execute("ansi --position="..i..",1 --hide-cursor '"..engine.string.l_pad(key, 20)..engine.string.r_pad(tostring(engine.debug_log[key].value), 15).."'")
       end
     end
   end
