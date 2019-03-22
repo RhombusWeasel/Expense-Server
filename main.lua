@@ -171,8 +171,10 @@ function load_game()
   engine.debug_text("RAM Usage", math.round(1, 2))
   engine.debug_text("RAM Reclaimed", math.round(1, 2))
   engine.debug_text("Connections", "None")
+  engine.debug_text("Last IP", "None")
+  engine.debug_text("Last Port", "None")
   engine.debug_text("Last Packet", "None")
-  engine.debug_text("Last Connection", "None")
+  engine.debug_text("Last Message", "None")
   engine.debug_text("Last Disconnect", "None")
   engine.state.solar.startup()
   local time = os.time()
@@ -194,14 +196,17 @@ function update()
       engine.debug_text("Last IP", e_ip)
       engine.debug_text("Last Port", e_port)
       if event.type == "receive" then
-        engine.debug_text("Last Packet", pkt.command)
+        engine.debug_text("Last Packet", "Receive")
+        engine.debug_text("Last Message", pkt.command)
         if engine.message[pkt.command] then
           engine.message[pkt.command](event, pkt)
         end
       elseif event.type == "connect" then
+        engine.debug_text("Last Packet", "Connect")
         engine.connected = engine.connected + 1
         engine.message.auth(event)
       elseif event.type == "disconnect" then
+        engine.debug_text("Last Packet", "Disconnect")
         engine.debug_text("Last Disconnect", e_ip)
         engine.connected = engine.connected - 1
         for k, v in pairs(engine.clients) do
