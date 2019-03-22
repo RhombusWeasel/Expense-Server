@@ -224,9 +224,9 @@ function update()
     data = game.ecs.entity_list,
   }
   engine.message.broadcast(pkt)
-  engine.pre_ram_count = math.floor(collectgarbage("count"))
+  engine.pre_ram_count = collectgarbage("count")
   collectgarbage("collect")
-  engine.post_ram_count = math.floor(collectgarbage("count"))
+  engine.post_ram_count = collectgarbage("count")
   local dt = socket.gettime() - time
   time = socket.gettime()
   engine.uptime = os.time()
@@ -234,7 +234,7 @@ function update()
   engine.debug_text("Tracked values", engine.debug_count)
   engine.debug_text("Delta Time", math.round(dt, 2))
   engine.debug_text("RAM Usage", engine.post_ram_count)
-  engine.debug_text("RAM Reclaimed", math.round(engine.pre_ram_count - engine.post_ram_count, 2))
+  engine.debug_text("RAM Reclaimed", math.round(engine.post_ram_count - engine.pre_ram_count, 2))
   engine.debug_text("Connections", engine.connected.."/"..engine.host:peer_count())
   engine.state.solar.update(dt)
 end
