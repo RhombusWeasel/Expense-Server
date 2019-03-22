@@ -9,8 +9,8 @@ local ecs = engine.class:extend()
   Initialize the entity list and the system list.
 ]]
 function ecs:init()
-  engine.debug_text("ECS Start RAM", collectgarbage("count"))
-  engine.debug_text("ECS End RAM", collectgarbage("count"))
+  engine.debug_text("ECS Start RAM", math.round(collectgarbage("count"), 2))
+  engine.debug_text("ECS End RAM", math.round(collectgarbage("count"), 2))
   self.entity_list = {}
   self.system_list = {}
   self.selected_list = {}
@@ -125,9 +125,9 @@ function ecs:update(dt)
   end
   for i = 1, engine.game_speed do
     for i = 1, #self.system_list do
-      engine.debug_text("ECS System "..i.." SRAM", collectgarbage("count"))
+      engine.debug_text("ECS System "..i.." SRAM", math.round(collectgarbage("count"), 2))
       self:update_system(dt, self.system_list[i])
-      engine.debug_text("ECS System "..i.." ERAM", collectgarbage("count"))
+      engine.debug_text("ECS System "..i.." ERAM", math.round(collectgarbage("count"), 2))
     end
   end
 end

@@ -22,10 +22,17 @@ end
 
 function class:init(...) end
 
+--[[math.round:
+  Pass a number [n] and an amount of decimal places to round to [deci].
+]]
+function math.round(n, deci)
+  deci = 10^(deci or 0)
+  return math.floor(n*deci+.5)/deci
+end
+
 --[[Recursive Load:
   Recursively load files and store them in a table.
 ]]
-
 local function scandir(directory)
   local i, t, popen = 0, {}, io.popen
   local pfile = popen('ls -a "'..directory..'"')
@@ -83,7 +90,6 @@ end
 
   Update is then looped until the exit condition is met.
 ]]
-
 local enet = require("enet")
 local socket = require("socket")
 local dt = 0
