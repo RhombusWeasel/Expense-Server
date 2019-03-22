@@ -113,7 +113,8 @@ engine = {
   debug_log = {},
   debug_draw = {},
   debug_mode = true,
-  debug_count = 0
+  debug_count = 0,
+  debug_line = 0,
 }
 
 local function format_time(s)
@@ -147,22 +148,14 @@ function engine.debug_text(key, value)
 end
 
 function print_debug()
-  local draw = false
-  for i = 1, #engine.debug_draw do
-    local key = engine.debug_draw[i]
-    if engine.debug_log[key].value ~= engine.debug_log[key].last then
-      draw = true
-      break
-    end
-  end
-  if draw then
+  if engine.debug_mode then
     local l = #engine.debug_draw
-    for i = 1, l do
-      local key = engine.debug_draw[i]
-      os.execute("ansi --position="..i..",1 --hide-cursor '"..engine.string.l_pad(key, 20)..engine.string.r_pad(tostring(engine.debug_log[key].value), 10).."'")
+    engine.debug_line = engine.debug_line + 1
+    if engine.debug_line > l then
+      engine.debug_line = 1
     end
-    os.execute("ansi --position="..(l + 1)..",1 --hide-cursor ' '")
-    os.execute("ansi --hide-cursor")
+    os.execute("ansi --position="..engine.debug_line..",1 --hide-cursor '"..engine.string.l_pad(key, 20)..engine.string.r_pad(tostring(engine.debug_log[key].value), 10).."'")
+    --os.execute("ansi --position="..(l + 1)..",1 --hide-cursor ' '")
   end
 end
 
