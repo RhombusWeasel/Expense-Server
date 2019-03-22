@@ -107,7 +107,7 @@ engine = {
   game_speed = 1,
   hash_grid_size = 512,
   server_col = {0,1,0,1},
-  host = {},
+  host = false,
   hosts = require("Saved_Data.host_data"),
   players = {},
   clients = {},
@@ -196,62 +196,65 @@ function load_game()
 end
 
 function update()
-  local event = engine.host:service(50)
-  while event do
-    local pkt = engine.string.unpack(event.data)
-    if pkt then
-      local p_str = tostring(event.peer)
-      local IP_data = engine.string.split(p_str, ":")
-      local e_ip = IP_data[1]
-      local e_port = IP_data[2]
-      engine.debug_text("Last IP", e_ip)
-      engine.debug_text("Last Port", e_port)
-      if event.type == "receive" then
-        engine.debug_text("Last Packet", "Receive")
-        engine.debug_text("Last Message", pkt.command)
-        if engine.message[pkt.command] then
-          engine.message[pkt.command](event, pkt)
-        end
-      elseif event.type == "connect" then
-        engine.debug_text("Last Packet", "Connect")
-        engine.connected = engine.connected + 1
-        engine.message.auth(event)
-      elseif event.type == "disconnect" then
-        engine.debug_text("Last Packet", "Disconnect")
-        engine.debug_text("Last Disconnect", e_ip)
-        engine.connected = engine.connected - 1
-        for k, v in pairs(engine.clients) do
-          if v.peer == event.peer then
-            engine.hosts[k].online = false
-            engine.clients[k].peer = nil
+  if engine.host then
+    local event = engine.host:service(50)
+    while event do
+      local pkt = engine.string.unpack(event.data)
+      if pkt then
+        local p_str = tostring(event.peer)
+        local IP_data = engine.string.split(p_str, ":")
+        local e_ip = IP_data[1]
+        local e_port = IP_data[2]
+        engine.debug_text("Last IP", e_ip)
+        engine.debug_text("Last Port", e_port)
+        if event.type == "receive" then
+          engine.debug_text("Last Packet", "Receive")
+          engine.debug_text("Last Message", pkt.command)
+          if engine.message[pkt.command] then
+            engine.message[pkt.command](event, pkt)
+          end
+        elseif event.type == "connect" then
+          engine.debug_text("Last Packet", "Connect")
+          engine.connected = engine.connected + 1
+          engine.message.auth(event)
+        elseif event.type == "disconnect" then
+          engine.debug_text("Last Packet", "Disconnect")
+          engine.debug_text("Last Disconnect", e_ip)
+          engine.connected = engine.connected - 1
+          for k, v in pairs(engine.clients) do
+            if v.peer == event.peer then
+              engine.hosts[k].online = false
+              engine.clients[k].peer = nil
+            end
           end
         end
       end
+      event = engine.host:service()
     end
-    event = engine.host:service()
+    engine.pre_cast_ram_count = collectgarbage("count")
+    local pkt = {
+      command = "map_update",
+      data = game.ecs.entity_list,
+    }
+    engine.message.broadcast(pkt)
+    engine.cast_ram_count = collectgarbage("count")
+    collectgarbage("collect")
+    engine.post_ram_count = collectgarbage("count")
+    local dt = socket.gettime() - time
+    time = socket.gettime()
+    engine.uptime = os.time()
+    engine.debug_text("Uptime", format_time(engine.uptime - engine.start_time))
+    engine.debug_text("Tracked values", engine.debug_count)
+    engine.debug_text("Delta Time", math.round(dt, 2))
+    engine.debug_text("RAM Start", math.round(engine.pre_cast_ram_count, 2))
+    engine.debug_text("RAM Cast", math.round(engine.cast_ram_count - engine.pre_cast_ram_count, 2))
+    engine.debug_text("RAM Usage", math.round(engine.post_ram_count, 2))
+    engine.debug_text("RAM Reclaimed", math.round(engine.post_ram_count - engine.cast_ram_count, 2))
+    engine.debug_text("Connections", engine.connected.."/"..engine.host:peer_count())
+    engine.state.solar.update(dt)
+  else
+    engine.host = enet.host_create("*:6701")
   end
-  engine.pre_cast_ram_count = collectgarbage("count")
-  local pkt = {
-    command = "map_update",
-    data = game.ecs.entity_list,
-  }
-  engine.message.broadcast(pkt)
-  engine.cast_ram_count = collectgarbage("count")
-  collectgarbage("collect")
-  engine.post_ram_count = collectgarbage("count")
-  local dt = socket.gettime() - time
-  time = socket.gettime()
-  counter_time = counter_time + dt
-  engine.uptime = os.time()
-  engine.debug_text("Uptime", format_time(engine.uptime - engine.start_time))
-  engine.debug_text("Tracked values", engine.debug_count)
-  engine.debug_text("Delta Time", math.round(dt, 2))
-  engine.debug_text("RAM Start", math.round(engine.pre_cast_ram_count, 2))
-  engine.debug_text("RAM Cast", math.round(engine.cast_ram_count - engine.pre_cast_ram_count, 2))
-  engine.debug_text("RAM Usage", math.round(engine.post_ram_count, 2))
-  engine.debug_text("RAM Reclaimed", math.round(engine.post_ram_count - engine.cast_ram_count, 2))
-  engine.debug_text("Connections", engine.connected.."/"..engine.host:peer_count())
-  engine.state.solar.update(dt)
 end
 
 --PROGRAM START:
