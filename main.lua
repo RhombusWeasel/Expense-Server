@@ -154,8 +154,10 @@ function print_debug()
     if engine.debug_line > l then
       engine.debug_line = 1
     end
-    os.execute("ansi --position="..engine.debug_line..",1 --hide-cursor '"..engine.string.l_pad(key, 20)..engine.string.r_pad(tostring(engine.debug_log[key].value), 10).."'")
-    --os.execute("ansi --position="..(l + 1)..",1 --hide-cursor ' '")
+    local key = engine.debug_draw[engine.debug_line]
+    if engine.debug_log[key].value ~= engine.debug_log[key].last then
+      os.execute("ansi --position="..engine.debug_line..",1 --hide-cursor '"..engine.string.l_pad(key, 20)..engine.string.r_pad(tostring(engine.debug_log[key].value), 10).."'")
+    end
   end
 end
 
