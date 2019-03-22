@@ -36,7 +36,7 @@ function ecs:add_system(sys, ...)
     s:setup()
   end
   table.insert(self.system_list, s)
-  engine.debug_test("ECS Systems", #self.system_list)
+  engine.debug_text("ECS Systems", #self.system_list)
   self.system_list[#self.system_list].update_list = {}
 end
 
@@ -125,9 +125,9 @@ function ecs:update(dt)
   end
   for i = 1, engine.game_speed do
     for i = 1, #self.system_list do
-      engine.debug_test("ECS System "..i.." SRAM", collectgarbage("count"))
+      engine.debug_text("ECS System "..i.." SRAM", collectgarbage("count"))
       self:update_system(dt, self.system_list[i])
-      engine.debug_test("ECS System "..i.." ERAM", collectgarbage("count"))
+      engine.debug_text("ECS System "..i.." ERAM", collectgarbage("count"))
     end
   end
 end
