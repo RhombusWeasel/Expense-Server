@@ -244,14 +244,11 @@ function update()
   engine.debug_text("Uptime", format_time(engine.uptime - engine.start_time))
   engine.debug_text("Tracked values", engine.debug_count)
   engine.debug_text("Delta Time", math.round(dt, 2))
-  if format_time(counter_time) == "00:00:01" then
-    counter_time = 0
-    engine.debug_text("RAM Start", math.round(engine.pre_cast_ram_count, 2))
-    engine.debug_text("RAM Cast", math.round(engine.cast_ram_count - engine.pre_cast_ram_count, 2))
-    engine.debug_text("RAM Usage", math.round(engine.post_ram_count, 2))
-    engine.debug_text("RAM Reclaimed", math.round(engine.post_ram_count - engine.cast_ram_count, 2))
-    engine.debug_text("Connections", engine.connected.."/"..engine.host:peer_count())
-  end
+  engine.debug_text("RAM Start", math.round(engine.pre_cast_ram_count, 2))
+  engine.debug_text("RAM Cast", math.round(engine.cast_ram_count - engine.pre_cast_ram_count, 2))
+  engine.debug_text("RAM Usage", math.round(engine.post_ram_count, 2))
+  engine.debug_text("RAM Reclaimed", math.round(engine.post_ram_count - engine.cast_ram_count, 2))
+  engine.debug_text("Connections", engine.connected.."/"..engine.host:peer_count())
   engine.state.solar.update(dt)
 end
 
