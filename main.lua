@@ -96,6 +96,7 @@ local dt = 0
 local time = socket.gettime()
 local t_str = "00:00:00"
 local counter_time = 0
+local draw_count = 0
 
 hosts = {}
 clients = {}
@@ -151,6 +152,7 @@ end
 
 function print_debug()
   if engine.debug_mode then
+    draw_count = 0
     local l = #engine.debug_draw
     engine.debug_line = engine.debug_line + 1
     if engine.debug_line > l then
@@ -159,9 +161,11 @@ function print_debug()
     for i = 1, #engine.debug_draw do
       local key = engine.debug_draw[i]
       if engine.debug_log[key].value ~= engine.debug_log[key].last then
+        draw_count = draw_count + 1
         os.execute("ansi --position="..i..",1 --hide-cursor '"..engine.string.l_pad(key, 20)..engine.string.r_pad(tostring(engine.debug_log[key].value), 15).."'")
       end
     end
+    engine.debug_text("Draw Count", draw_count)
   end
 end
 
