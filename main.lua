@@ -179,6 +179,7 @@ function load_game()
   engine.start_time = time
   engine.uptime = time
   engine.check_time = 0
+  engine.connected = 0
 end
 
 function update()
@@ -186,16 +187,23 @@ function update()
   while event do
     local pkt = engine.string.unpack(event.data)
     if pkt then
+      local p_str = tostring(event.peer)
+      local IP_data = engine.string.split(p_str, ":")
+      local e_ip = IP_data[1]
+      local e_port = IP_data[2]
+      engine.debug_text("Last IP", e_ip)
+      engine.debug_text("Last Port", e_port)
       if event.type == "receive" then
-        engine.debug_text("Last Packet", tostring(event.peer)..": "..pkt.command)
+        engine.debug_text("Last Packet", pkt.command)
         if engine.message[pkt.command] then
           engine.message[pkt.command](event, pkt)
         end
       elseif event.type == "connect" then
-        engine.debug_text("Last Connection", tostring(event.peer))
+        engine.connected = engine.connected + 1
         engine.message.auth(event)
       elseif event.type == "disconnect" then
-        engine.debug_text("Last Disconnect", tostring(event.peer))
+        engine.debug_text("Last Disconnect", e_ip)
+        engine.connected = engine.connected - 1
         for k, v in pairs(engine.clients) do
           if v.peer == event.peer then
             engine.hosts[k].online = false
@@ -222,7 +230,7 @@ function update()
   engine.debug_text("Delta Time", math.round(dt, 2))
   engine.debug_text("RAM Usage", engine.post_ram_count)
   engine.debug_text("RAM Reclaimed", math.round(engine.pre_ram_count - engine.post_ram_count, 2))
-  engine.debug_text("Connections", #engine.clients.."/"..engine.host:peer_count())
+  engine.debug_text("Connections", #engine.connected.."/"..engine.host:peer_count())
   engine.state.solar.update(dt)
 end
 

@@ -1,7 +1,10 @@
-return function (str)
-  local words = {}
-  for w in str:gmatch("%S+") do
-    table.insert(words, w)
+return function(str, sep)
+  if sep == nil then
+    sep = "%s"
   end
-  return words
+  local t={}
+  for str in string.gmatch(str, "([^"..sep.."]+)") do
+    table.insert(t, str)
+  end
+  return t
 end
