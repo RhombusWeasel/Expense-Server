@@ -221,7 +221,7 @@ function update()
   engine.debug_text("Tracked values", engine.debug_count)
   engine.debug_text("Delta Time", math.round(dt, 2))
   engine.debug_text("RAM Usage", engine.post_ram_count)
-  engine.debug_text("RAM Reclaimed", math.round(engine.post_ram_count - engine.pre_ram_count, 2))
+  engine.debug_text("RAM Reclaimed", math.round(engine.pre_ram_count - engine.post_ram_count, 2))
   engine.debug_text("Connections", #engine.clients.."/"..engine.host:peer_count())
   engine.state.solar.update(dt)
 end
