@@ -169,6 +169,7 @@ function load_game()
   local time = os.time()
   engine.start_time = time
   engine.uptime = time
+  engine.check_time = 0
 end
 
 function update()
@@ -200,17 +201,19 @@ function update()
     data = game.ecs.entity_list,
   }
   engine.message.broadcast(pkt)
+  engine.pre_ram_count = math.floor(collectgarbage("count"))
   collectgarbage("collect")
+  engine.post_ram_count = math.floor(collectgarbage("count"))
   local dt = socket.gettime() - time
   time = socket.gettime()
-  engine.state.solar.update(dt)
   engine.uptime = os.time()
-  engine.debug_text("Delta Time", math.round(dt, 2))
   engine.debug_text("Uptime", format_time(engine.uptime - engine.start_time))
   engine.debug_text("Tracked values", engine.debug_count)
-  engine.debug_text("RAM Usage", math.floor(collectgarbage("count")))
-  engine.debug_text("Entities", #game.ecs.entity_list)
-  engine.debug_text("Connections", engine.host:peer_count())
+  engine.debug_text("Delta Time", math.round(dt, 2))
+  engine.debug_text("RAM Usage", engine.post_ram_count)
+  engine.debug_text("RAM Gain", engine.post_ram_count - engine.pre_ram_count)
+  engine.debug_text("Connections", #engine.clients.."/"..engine.host:peer_count())
+  engine.state.solar.update(dt)
 end
 
 --PROGRAM START:
@@ -220,6 +223,7 @@ getFiles(engine, "Data")
 load_game()
 engine.exit_bool = false
 engine.state.solar.update(dt)
+engine.last_ram_count = math.floor(collectgarbage("count"))
 while not engine.exit_bool do
   update()
   print_debug()
