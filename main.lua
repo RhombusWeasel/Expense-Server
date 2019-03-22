@@ -94,6 +94,8 @@ local enet = require("enet")
 local socket = require("socket")
 local dt = 0
 local time = socket.gettime()
+local t_str = "00:00:00"
+local counter_time = 0
 
 hosts = {}
 clients = {}
@@ -169,6 +171,7 @@ function load_game()
   engine.debug_text("Tracked values", 0)
   engine.debug_text("Delta Time", math.round(1, 2))
   engine.debug_text("RAM Start", math.round(1, 2))
+  engine.debug_text("RAM Cast", math.round(1, 2))
   engine.debug_text("RAM Usage", math.round(1, 2))
   engine.debug_text("RAM Reclaimed", math.round(1, 2))
   engine.debug_text("Connections", "None")
@@ -220,24 +223,30 @@ function update()
     end
     event = engine.host:service()
   end
+  engine.pre_cast_ram_count = collectgarbage("count")
   local pkt = {
     command = "map_update",
     data = game.ecs.entity_list,
   }
   engine.message.broadcast(pkt)
-  engine.pre_ram_count = collectgarbage("count")
+  engine.cast_ram_count = collectgarbage("count")
   collectgarbage("collect")
   engine.post_ram_count = collectgarbage("count")
   local dt = socket.gettime() - time
   time = socket.gettime()
+  counter_time = counter_time + dt
   engine.uptime = os.time()
   engine.debug_text("Uptime", format_time(engine.uptime - engine.start_time))
   engine.debug_text("Tracked values", engine.debug_count)
   engine.debug_text("Delta Time", math.round(dt, 2))
-  engine.debug_text("RAM Start", math.round(engine.pre_ram_count, 2))
-  engine.debug_text("RAM Usage", math.round(engine.post_ram_count, 2))
-  engine.debug_text("RAM Reclaimed", math.round(engine.post_ram_count - engine.pre_ram_count, 2))
-  engine.debug_text("Connections", engine.connected.."/"..engine.host:peer_count())
+  if format_time(counter_time) == "00:00:01" then
+    counter_time = 0
+    engine.debug_text("RAM Start", math.round(engine.pre_cast_ram_count, 2))
+    engine.debug_text("RAM Cast", math.round(engine.cast_ram_count - engine.pre_cast_ram_count, 2))
+    engine.debug_text("RAM Usage", math.round(engine.post_ram_count, 2))
+    engine.debug_text("RAM Reclaimed", math.round(engine.post_ram_count - engine.cast_ram_count, 2))
+    engine.debug_text("Connections", engine.connected.."/"..engine.host:peer_count())
+  end
   engine.state.solar.update(dt)
 end
 
