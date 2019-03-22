@@ -38,7 +38,7 @@ function ecs:add_system(sys, ...)
   end
   table.insert(self.system_list, s)
   engine.debug_text("ECS Systems", #self.system_list)
-  engine.debug_text("ECS System "..s.label.." SRAM", math.round(collectgarbage("count"), 2))
+  engine.debug_text(s.label.." RAM", math.round(collectgarbage("count"), 2))
   self.system_list[#self.system_list].update_list = {}
 end
 
@@ -125,9 +125,9 @@ function ecs:update(dt)
       end
     end
   end
+  local s_ram = collectgarbage("count")
   for i = 1, engine.game_speed do
     for i = 1, #self.system_list do
-      local s_ram = collectgarbage("count")
       self:update_system(dt, self.system_list[i])
       engine.debug_text(self.system_list[i].label.." RAM", math.round(collectgarbage("count") - s_ram, 2))
     end
