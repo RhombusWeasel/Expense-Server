@@ -31,12 +31,14 @@ end
   Each system may contain a pre_update method which is called once at the start of each update cycle
 ]]
 function ecs:add_system(sys, ...)
-  local s = sys:new(...)
+  local s = engine.behaviour[sys]:new(...)
+        s.label = sys
   if s.setup ~= nil then
     s:setup()
   end
   table.insert(self.system_list, s)
   engine.debug_text("ECS Systems", #self.system_list)
+  engine.debug_text("ECS System "..s.label.." SRAM", math.round(collectgarbage("count"), 2))
   self.system_list[#self.system_list].update_list = {}
 end
 
@@ -125,9 +127,9 @@ function ecs:update(dt)
   end
   for i = 1, engine.game_speed do
     for i = 1, #self.system_list do
-      engine.debug_text("ECS System "..i.." SRAM", math.round(collectgarbage("count"), 2))
+      local s_ram = collectgarbage("count")
       self:update_system(dt, self.system_list[i])
-      engine.debug_text("ECS System "..i.." ERAM", math.round(collectgarbage("count"), 2))
+      engine.debug_text("ECS System "..self.system_list[i].label.." SRAM", math.round(collectgarbage("count") - s_ram, 2))
     end
   end
 end
