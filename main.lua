@@ -153,11 +153,9 @@ function print_debug()
     local l = #engine.debug_draw
     for i = 1, l do
       local key = engine.debug_draw[i]
-      --os.execute("ansi --erase-line="..i)
-      os.execute("ansi --position="..i..",1 '"..engine.string.l_pad(key, 20)..engine.string.r_pad(tostring(engine.debug_log[key].value), 10).."'")
+      os.execute("ansi --position="..i..",1 --hide-cursor '"..engine.string.l_pad(key, 20)..engine.string.r_pad(tostring(engine.debug_log[key].value), 10).."'")
     end
-    os.execute("ansi --erase-line="..l)
-    os.execute("ansi --position="..l..",1")
+    os.execute("ansi --position="..i..",1 --hide-cursor ' '")
     os.execute("ansi --hide-cursor")
   end
 end
