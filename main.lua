@@ -109,7 +109,7 @@ engine = {
   game_speed = 1,
   hash_grid_size = 512,
   server_col = {0,1,0,1},
-  host = enet.host_create("*:6701"),
+  host = {},
   hosts = require("Saved_Data.host_data"),
   players = {},
   clients = {},
@@ -171,6 +171,7 @@ function print_debug()
 end
 
 function load_game()
+  engine.host = enet.host_create("*:6701")
   os.execute("ansi --erase-display=2")
   engine.debug_text("Uptime", "00:00:00")
   engine.debug_text("Tracked values", 0)
@@ -197,9 +198,6 @@ function load_game()
 end
 
 function update()
-  if not engine.host then
-    engine.host = enet.host_create("*:6701")
-  end
   local event = engine.host:service(50)
   while event do
     local pkt = engine.string.unpack(event.data)
