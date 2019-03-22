@@ -197,6 +197,9 @@ function load_game()
 end
 
 function update()
+  if not engine.host then
+    engine.host = enet.host_create("*:6701")
+  end
   local event = engine.host:service(50)
   while event do
     local pkt = engine.string.unpack(event.data)
