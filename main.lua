@@ -96,9 +96,6 @@ local dt = 0
 local time = socket.gettime()
 local draw_count = 0
 
-hosts = {}
-clients = {}
-names = {}
 game = {}
 engine = {
   class = class,
@@ -172,6 +169,7 @@ end
 function load_game()
   os.execute("ansi --erase-display=2")
   engine.debug_text("Uptime", "00:00:00")
+  engine.debug_text("Status", "Running")
   engine.debug_text("Tracked values", 0)
   engine.debug_text("Delta Time", math.round(1, 2))
   engine.debug_text("Spacer", "")
@@ -253,7 +251,7 @@ function update()
     engine.debug_text("Connections", engine.connected.."/"..engine.host:peer_count())
     engine.state.solar.update(dt)
   else
-    engine.debug_text("Debug", "No Host!")
+    engine.debug_text("Status", "No Host!")
   end
 end
 
