@@ -200,6 +200,7 @@ function update()
     while event do
       local pkt = engine.string.unpack(event.data)
       if pkt then
+        engine.debug_text("Status", "Processing")
         local p_str = tostring(event.peer)
         local IP_data = engine.string.split(p_str, ":")
         local e_ip = IP_data[1]
