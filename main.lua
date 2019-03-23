@@ -202,6 +202,7 @@ function update()
       if pkt then
         engine.debug_text("Status", "Processing")
         local p_str = tostring(event.peer)
+        engine.debug_text("Last Message", p_str)
         local IP_data = engine.string.split(p_str, ":")
         local e_ip = IP_data[1]
         local e_port = IP_data[2]
@@ -229,7 +230,7 @@ function update()
           end
         end
       end
-      event = engine.host:service()
+      engine.host:flush()
     end
     engine.pre_cast_ram_count = collectgarbage("count")
     local pkt = {
