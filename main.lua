@@ -229,7 +229,7 @@ function update()
           end
         end
       end
-      --event = engine.host:service()
+      event = engine.host:service()
     end
     engine.pre_cast_ram_count = collectgarbage("count")
     local pkt = {
