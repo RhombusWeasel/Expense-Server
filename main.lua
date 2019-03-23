@@ -92,7 +92,7 @@ end
 ]]
 local enet = require("enet")
 local socket = require("socket")
-local dt = 0
+local dt = 0.1
 local time = socket.gettime()
 local draw_count = 0
 
@@ -227,7 +227,7 @@ function update()
           end
         end
       end
-      event = engine.host:service()
+      --event = engine.host:service()
     end
     engine.pre_cast_ram_count = collectgarbage("count")
     local pkt = {
