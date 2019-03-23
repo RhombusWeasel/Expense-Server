@@ -38,7 +38,7 @@ function ecs:add_system(sys, ...)
   end
   table.insert(self.system_list, s)
   engine.debug_text("ECS Systems", #self.system_list)
-  engine.debug_text(s.label.." RAM", 1, 2))
+  engine.debug_text(s.label.." RAM", 1.00)
   self.system_list[#self.system_list].update_list = {}
 end
 
