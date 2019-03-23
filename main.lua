@@ -196,7 +196,7 @@ function load_game()
 end
 
 function update()
-  if engine.host then
+  if engine.host ~= nil then
     local event = engine.host:service(50)
     while event do
       local pkt = engine.string.unpack(event.data)
