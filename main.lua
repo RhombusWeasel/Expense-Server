@@ -170,7 +170,6 @@ function print_debug()
 end
 
 function load_game()
-  engine.host = enet.host_create("*:6701")
   os.execute("ansi --erase-display=2")
   engine.debug_text("Uptime", "00:00:00")
   engine.debug_text("Tracked values", 0)
@@ -254,7 +253,7 @@ function update()
     engine.debug_text("Connections", engine.connected.."/"..engine.host:peer_count())
     engine.state.solar.update(dt)
   else
-    engine.host = enet.host_create("*:6701")
+    engine.debug_text("Debug", "No Host!")
   end
 end
 
