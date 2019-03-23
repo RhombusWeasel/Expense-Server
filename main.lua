@@ -169,7 +169,7 @@ end
 function load_game()
   os.execute("ansi --erase-display=2")
   engine.debug_text("Uptime", "00:00:00")
-  engine.debug_text("Status", "Running")
+  engine.debug_text("Status", "Startup")
   engine.debug_text("Tracked values", 0)
   engine.debug_text("Delta Time", math.round(1, 2))
   engine.debug_text("Spacer", "")
@@ -195,6 +195,7 @@ end
 
 function update()
   if engine.host ~= nil then
+    engine.debug_text("Status", "Running")
     local event = engine.host:service(50)
     while event do
       local pkt = engine.string.unpack(event.data)
