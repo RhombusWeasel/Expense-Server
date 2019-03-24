@@ -233,11 +233,11 @@ function update()
       event = engine.host:service()
     end
     engine.pre_cast_ram_count = collectgarbage("count")
-    local pkt = {
-      command = "map_update",
-      data = game.ecs.entity_list,
-    }
-    engine.message.broadcast(pkt)
+--    local pkt = {
+--      command = "map_update",
+--      data = game.ecs.entity_list,
+--    }
+--    engine.message.broadcast(pkt)
     engine.cast_ram_count = collectgarbage("count")
     collectgarbage("collect")
     engine.post_ram_count = collectgarbage("count")
