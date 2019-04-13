@@ -158,7 +158,7 @@ function print_debug()
       local key = engine.debug_draw[i]
       if engine.debug_log[key].value ~= engine.debug_log[key].last then
         draw_count = draw_count + 1
-        os.execute("ansi --position="..i..",1 --hide-cursor '"..engine.string.l_pad(key, 20)..engine.string.r_pad(tostring(engine.debug_log[key].value), 15).."'")
+        os.execute("draw -p "..i.." 1 '"..engine.string.l_pad(key, 20)..engine.string.r_pad(tostring(engine.debug_log[key].value), 15).."'")
         engine.debug_log[key].changed = false
       end
     end
